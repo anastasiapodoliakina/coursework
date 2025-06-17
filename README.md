@@ -1,11 +1,10 @@
 # Data Analysis in Sports
-## Project Overview
 
 ## Project Overview
 
-This repository delivers a complete end-to-end pipeline for collecting, exploring, and predicting skater segment scores in international figure skating competitions. Starting with `scraper.py`, it automatically downloads and parses official ISU result PDFs into three structured tables (skaters, executed elements, program components). A data analysis notebook uncovers score distributions, judge biases, and country-level trends. Finally, the ML notebook engineers features from technical and component marks, evaluates multiple regressors via cross-validation, and highlights the most influential predictors of segment performance. Together, these tools enable actionable insights into scoring mechanics and provide reliable forecasts of future competition outcomes.```
+This repository delivers a complete end-to-end pipeline for collecting, exploring, and predicting skater segment scores in international figure skating competitions. Starting with `scraper.py`, it automatically downloads and parses official ISU result PDFs into three structured tables (skaters, executed elements, program components). A data analysis notebook uncovers score distributions, judge biases, and country-level trends. Finally, the ML notebook engineers features from technical and component marks, evaluates multiple regressors via cross-validation, and highlights the most influential predictors of segment performance. Together, these tools enable actionable insights into scoring mechanics and provide reliable forecasts of future competition outcomes.
 
-
+## Data Collection
 Data are collected and parsed using the `scraper.py`:
 
 - **Source Fetching**  
