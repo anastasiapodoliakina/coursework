@@ -32,6 +32,36 @@ Details every individual technical element attempted by skaters. Each row corres
 Captures the nine program component marks for each skater’s segment:
 * component_type: Category of component (e.g., “Skating Skills”, “Performance”).
 * element_name: Full name of the component.
+## Exploratory Data Analysis (EDA)
+
+A comprehensive EDA was performed on the three tables—**skaters**, **executed_elements**, and **program_components**—to understand score distributions, judge behaviors, and relationships between technical and component marks:
+
+**Descriptive Statistics**  
+- Generated summary statistics (mean, median, standard deviation, min/max) for all numeric fields:  
+  - `total_segment_score`, `total_element_score`, `total_program_component_score`, `total_deductions` (skaters table)  
+  - `base_value`, `goe`, `total_score` (executed_elements table)  
+  - `total_score`, `factor` (program_components table)  
+- Identified a handful of extreme outliers in element GOE (±5+) and segment deductions (>3), which were flagged for manual review.
+
+**Univariate Analysis**  
+- **Histograms** for `total_segment_score`, `total_element_score`, and `total_program_component_score` revealed left-skew in component scores but right-skew in element and segment scores.  
+- **Density plots** for `base_value` showed bi-modal peaks corresponding to jump vs. spin/step elements.  
+- **Boxplots** for each judge’s GOE and component marks (`judge_1`…`judge_9`) highlighted a slight upward bias in judges 5–7 compared to judges 1–4 and 8–9.
+
+**Categorical Distributions**  
+- **Bar charts** of `segment` (“Short Program” vs. “Free Skate”) and `category` (“Men’s Singles”, “Ladies’ Singles”, “Pairs”, “Ice Dance”) showed a roughly even split across segments but a higher frequency of Men’s and Ladies’ events.  
+- **Countplots** of `component_type` in executed elements (“Jump”, “Spin”, “Step Sequence”) confirmed jumps account for ~45% of all elements attempted.
+
+**Bivariate Relationships**  
+- **Scatter plots** of `total_element_score` vs. `total_program_component_score` uncovered a moderate positive correlation (ρ≈0.6), reinforcing that stronger technical performances often coincide with stronger components.  
+- **Heatmap** of Pearson correlations among all numeric features (scores, GOEs, deductions) guided the removal of highly collinear variables (e.g., overall GOE vs. summed GOE).
+
+**Country-Level and Judge Analysis**  
+- **Boxplots** of `total_segment_score` by `noc` illustrated that the top five NOCs (e.g., JPN, USA, RUS) had both higher medians and tighter score distributions.  
+- **Heatmaps** of average GOE per judge across all skaters uncovered subtle inter-judge variability, prompting a small adjustment in later modeling to normalize judge biases.
+
+After filtering out any records with missing `skater_id` or invalid GOE entries, these EDA insights informed feature selection, outlier treatment, and normalization steps for all downstream modeling.```
+
 * judge_1 … judge_9: Individual component scores from each judge.
 * total_score: Sum of the nine judges’ marks.
 * factor: Scaling multiplier applied to arrive at the final component score.
