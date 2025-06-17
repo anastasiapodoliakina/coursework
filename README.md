@@ -3,7 +3,7 @@
 
 ## Data Description
 The raw data for this repository is organized into three related tables—skaters, executed_elements, and program_components—each capturing a different aspect of the competition scoring process.
-1. Skaters (243 records)
+### 1. Skaters (243 records)
 Each row represents one skater’s performance in a given segment. Key fields include:
 * skater_id: Unique alphanumeric identifier for each skater.
 * rank: Final placement in the segment (integer).
