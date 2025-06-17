@@ -114,8 +114,8 @@ The `figureskating_ML.ipynb` notebook builds an end-to-end pipeline for forecast
   Splits data into train/test sets, applies K-Fold cross-validation, and reports metrics (MAE, MSE). Comparison of model performance identifies the best trade-off between bias and variance.
 
 - **Interpretation & Statistical Analysis**  
-  Leverages SHAP to visualize feature importances and examines coefficient significance using statsmodels + multiple hypothesis correction (`multipletests`) to flag the most predictive features.
+  Leverages SHAP to visualize feature importances and examines coefficient significance using statsmodels + multiple hypothesis correction to flag the most predictive features.
 
-- **Results & Next Steps**  
-  Summarizes best‐performing model, highlights top predictors (e.g. total element difficulty, GOE averages), and suggests further tuning (hyperparameter search, ensembling) or extension to classification tasks (e.g. predicting podium finish).
+- **Results**  
+  Summarizes best‐performing model, highlights top predictors, and suggests further tuning or extension to classification tasks.
 
