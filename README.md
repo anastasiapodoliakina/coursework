@@ -1,6 +1,35 @@
 # Data Analysis in Sports
 ## Project Overview
 
+## Data Collection
+
+Data are collected and parsed using the `scraper.py` script :contentReference[oaicite:0]{index=0}:
+
+- **Source Fetching**  
+  - Crawls the ISU results portal (`URL_TEMPLATE`) with `requests` and `BeautifulSoup`  
+  - Gathers all PDF links for short program, free skate/dance, and team events  
+
+- **Parallel Download**  
+  - Downloads each PDF concurrently via `ThreadPoolExecutor`  
+  - Skips known non-entry-list files and logs any download errors  
+
+- **PDF Extraction & Parsing**  
+  - Opens each PDF with `pdfplumber`, concatenates page text, and normalizes whitespace  
+  - Identifies segments (e.g. “Short Program”, “Free Skating”, “Rhythm Dance”, “Free Dance”) and categories (Men’s, Women’s, Pairs, Ice Dance, Team) by filename pattern  
+  - Uses regular expressions to split and extract:  
+    - **Skater metadata** (rank, names, NOC, scores, deductions)  
+    - **Executed elements** (element number, name, base value, GOE, individual judge scores)  
+    - **Program components** (component name, factor, individual judge scores)  
+
+- **Data Assembly & Output**  
+  - Aggregates parsed records into three pandas DataFrames:  
+    - `skaters.xlsx`  
+    - `executed_elements.xlsx`  
+    - `program_components.xlsx`  
+  - Saves each table to the `data/` folder and logs completion status  
+
+This pipeline ensures repeatable, automated collection of structured figure-skating results for downstream analysis.```
+
 ## Data Description
 The raw data for this repository is organized into three related tables—skaters, executed_elements, and program_components—each capturing a different aspect of the competition scoring process.
 ### 1. Skaters (243 records)
