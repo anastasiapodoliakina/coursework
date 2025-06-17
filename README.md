@@ -28,8 +28,6 @@ Data are collected and parsed using the `scraper.py`:
     - `program_components.xlsx`  
   - Saves each table to the `data/` folder and logs completion status  
 
-This pipeline ensures repeatable, automated collection of structured figure-skating results for downstream analysis.```
-
 ## Data Description
 The raw data for this repository is organized into three related tables—skaters, executed_elements, and program_components—each capturing a different aspect of the competition scoring process.
 ### 1. Skaters (243 records)
@@ -61,9 +59,10 @@ Details every individual technical element attempted by skaters. Each row corres
 Captures the nine program component marks for each skater’s segment:
 * component_type: Category of component (e.g., “Skating Skills”, “Performance”).
 * element_name: Full name of the component.
-## Data Analysis (figure_skating.ipynb)
+  
+## Data Analysis 
 
-A data analysis was performed on the three tables—**skaters**, **executed_elements**, and **program_components**—to understand score distributions, judge behaviors, and relationships between technical and component marks:
+The `figure_skating.ipynb` notebook provides a data analysis on the three tables—**skaters**, **executed_elements**, and **program_components**—to understand score distributions, judge behaviors, and relationships between technical and component marks:
 
 **Descriptive Statistics**  
 - Generated summary statistics (mean, median, standard deviation, min/max) for numeric fields:  
@@ -87,8 +86,36 @@ A data analysis was performed on the three tables—**skaters**, **executed_elem
 - **Element Complexity vs GOE**  
   Simpler elements (base ≤ 8) are executed more cleanly (positive GOEs) and more frequently; mid-difficulty elements (8–12) show uniform GOE spread; high-difficulty elements (≥ 12) are rarer but often executed with positive GOE.
 
-- **Country Discipline Performance**  
+- **Country Discipline Performance**
+
   Grouped bar charts reveal some countries excel in specific disciplines (e.g., one country leads in Ice Dance but trails in Singles).
 
 - **Complexity vs Execution Quality by Segment and Gender**  
   In both segments and for both genders, higher average base values generally align with higher average GOEs, though some skaters achieve high GOE on lower-value elements, indicating exceptional execution.
+
+## Predictive Modeling
+
+The `figureskating_ML.ipynb` notebook builds an end-to-end pipeline for forecasting skater segment scores:
+
+- **Data Loading & Merging**  
+  Imports the cleaned `skaters.xlsx`, `executed_elements.xlsx` and `program_components.xlsx` tables and joins them into a single modeling DataFrame.
+
+- **Feature Engineering**  
+  Aggregates element‐ and component-level GOEs, extracts summary statistics (e.g. mean/total GOE, base value), encodes categorical variables (segment, discipline, NOC), and normalizes numeric features via a `ColumnTransformer`.
+
+- **Modeling Pipeline**  
+  Uses scikit-learn’s `Pipeline` to chain preprocessing with regressors:  
+  - Linear Regression
+  - Ridge Regression
+  - Lasso Regression
+  - XGBoost
+
+- **Evaluation**  
+  Splits data into train/test sets, applies K-Fold cross-validation, and reports metrics (MAE, MSE). Comparison of model performance identifies the best trade-off between bias and variance.
+
+- **Interpretation & Statistical Analysis**  
+  Leverages SHAP to visualize feature importances and examines coefficient significance using statsmodels + multiple hypothesis correction (`multipletests`) to flag the most predictive features.
+
+- **Results & Next Steps**  
+  Summarizes best‐performing model, highlights top predictors (e.g. total element difficulty, GOE averages), and suggests further tuning (hyperparameter search, ensembling) or extension to classification tasks (e.g. predicting podium finish).
+
