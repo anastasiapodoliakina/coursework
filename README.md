@@ -3,7 +3,7 @@
 
 ## Data Collection
 
-Data are collected and parsed using the `scraper.py` script :contentReference[oaicite:0]{index=0}:
+Data are collected and parsed using the `scraper.py`:
 
 - **Source Fetching**  
   - Crawls the ISU results portal (`URL_TEMPLATE`) with `requests` and `BeautifulSoup`  
